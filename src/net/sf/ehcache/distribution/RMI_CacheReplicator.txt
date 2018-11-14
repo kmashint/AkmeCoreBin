@@ -1,0 +1,5 @@
+RMI_CacheReplicator.txt
+
+As required, check the latest EHCache to see if it needs this modification: 
+Change the notifyElementPut method to use the replicateUpdatesViaCopy=false flag 
+as it does in notifyElementUpdated.

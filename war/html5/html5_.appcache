@@ -1,0 +1,13 @@
+CACHE MANIFEST
+# v1
+
+CACHE:
+html5.js
+html5.css
+
+FALLBACK:
+
+NETWORK:
+*
+
+#LastModifiedRewriteFilter

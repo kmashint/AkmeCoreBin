@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- Generated from FindBugs.xml by XMLBuddy -->
+<!ELEMENT AuxClasspathEntry (#PCDATA)>
+<!ELEMENT BugCategory (Description)>
+<!ATTLIST BugCategory category NMTOKEN #REQUIRED>
+<!ELEMENT BugCode (Description)>
+<!ATTLIST BugCode abbrev ID #REQUIRED>
+<!ELEMENT BugCollection (Project,BugInstance+,BugCategory+,BugPattern+,BugCode+,Errors,FindBugsSummary,ClassFeatures,History)>
+<!ATTLIST BugCollection
+	analysisTimestamp NMTOKEN #REQUIRED
+	release CDATA #REQUIRED
+	sequence NMTOKEN #REQUIRED
+	timestamp NMTOKEN #REQUIRED
+	version NMTOKEN #REQUIRED
+>
+<!ELEMENT BugInstance (Class|Field|LocalVariable|LongMessage|Method|ShortMessage|SourceLine)*>
+<!ATTLIST BugInstance
+	abbrev NMTOKEN #REQUIRED
+	category (BAD_PRACTICE|CORRECTNESS|MALICIOUS_CODE|PERFORMANCE|STYLE) #REQUIRED
+	instanceHash NMTOKEN #REQUIRED
+	instanceOccurrenceMax NMTOKEN #REQUIRED
+	instanceOccurrenceNum NMTOKEN #REQUIRED
+	priority NMTOKEN #REQUIRED
+	type NMTOKEN #REQUIRED
+	uid NMTOKEN #REQUIRED
+>
+<!ELEMENT BugPattern (ShortDescription,Details)>
+<!ATTLIST BugPattern
+	abbrev ID #REQUIRED
+	category NMTOKEN #REQUIRED
+	type NMTOKEN #REQUIRED
+>
+<!ELEMENT Class (SourceLine,Message)>
+<!ATTLIST Class classname NMTOKEN #REQUIRED>
+<!ELEMENT ClassFeatures EMPTY>
+<!ELEMENT ClassStats EMPTY>
+<!ATTLIST ClassStats
+	bugs CDATA #REQUIRED
+	class NMTOKEN #REQUIRED
+	interface (false|true) #REQUIRED
+	priority_2 NMTOKEN #IMPLIED
+	size NMTOKEN #REQUIRED
+>
+<!ELEMENT Description (#PCDATA)>
+<!ELEMENT Details (#PCDATA)>
+<!ELEMENT Errors (MissingClass+)>
+<!ELEMENT Field (SourceLine,Message)>
+<!ATTLIST Field
+	classname NMTOKEN #REQUIRED
+	isStatic (false|true) #REQUIRED
+	name NMTOKEN #REQUIRED
+	signature CDATA #REQUIRED
+>
+<!ELEMENT FindBugsSummary (PackageStats+)>
+<!ATTLIST FindBugsSummary
+	clock_seconds NMTOKEN #REQUIRED
+	num_packages NMTOKEN #REQUIRED
+	priority_2 NMTOKEN #REQUIRED
+	timestamp CDATA #REQUIRED
+	total_bugs NMTOKEN #REQUIRED
+	total_classes NMTOKEN #REQUIRED
+	total_size NMTOKEN #REQUIRED
+>
+<!ELEMENT History EMPTY>
+<!ELEMENT Jar (#PCDATA)>
+<!ELEMENT LocalVariable (Message)>
+<!ATTLIST LocalVariable
+	name NMTOKEN #REQUIRED
+	pc NMTOKEN #REQUIRED
+	register NMTOKEN #REQUIRED
+	role NMTOKEN #REQUIRED
+>
+<!ELEMENT LongMessage (#PCDATA)>
+<!ELEMENT Message (#PCDATA)>
+<!ELEMENT Method (SourceLine,Message)>
+<!ATTLIST Method
+	classname NMTOKEN #REQUIRED
+	isStatic (false|true) #REQUIRED
+	name CDATA #REQUIRED
+	signature CDATA #REQUIRED
+>
+<!ELEMENT MissingClass (#PCDATA)>
+<!ELEMENT PackageStats (ClassStats+)>
+<!ATTLIST PackageStats
+	package ID #REQUIRED
+	priority_2 NMTOKEN #IMPLIED
+	total_bugs NMTOKEN #REQUIRED
+	total_size NMTOKEN #REQUIRED
+	total_types NMTOKEN #REQUIRED
+>
+<!ELEMENT Project (Jar,AuxClasspathEntry+,SrcDir)>
+<!ATTLIST Project filename CDATA #REQUIRED>
+<!ELEMENT ShortDescription (#PCDATA)>
+<!ELEMENT ShortMessage (#PCDATA)>
+<!ELEMENT SourceLine (Message?)>
+<!ATTLIST SourceLine
+	classname NMTOKEN #REQUIRED
+	end NMTOKEN #IMPLIED
+	endBytecode NMTOKEN #IMPLIED
+	role NMTOKEN #IMPLIED
+	sourcefile NMTOKEN #REQUIRED
+	sourcepath CDATA #REQUIRED
+	start NMTOKEN #IMPLIED
+	startBytecode NMTOKEN #IMPLIED
+	synthetic (true) #IMPLIED
+>
+<!ELEMENT SrcDir (#PCDATA)>

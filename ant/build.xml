@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+	ant/build.xml for AkmeCore
+-->
+<project name="AkmeCore" basedir=".." default="jar">
+	
+<!-- Load common properties -->
+<property environment="env"/>
+<property file="ant/common.properties"/>
+
+<target name="proj.init" description="Initialize">
+	<echo message="Processing ${ant.project.name} from ${basedir} with Java ${ant.java.version} ..."/>
+	<tstamp/>
+	
+	<!-- Load local properties -->
+	<property file="ant/local.properties"/>
+
+	<!-- Set project-specific properties -->
+	<property name="findbugs.home" value="C:/Java/findbugs-1.3.9"/>
+	<property name="findbugs.project" value="ant/FindBugs.fbp"/>
+	<property name="findbugs.xml" value="ant/FindBugs.xml"/>
+	<property name="findbugs.html" value="ant/FindBugs.html"/>
+</target>
+
+<target name="proj.clean" depends="proj.init" description="Clean the generated .class files (clean compile)">
+	<mkdir dir="${war.root.dir}/WEB-INF/classes"/>
+	<delete>
+		<fileset dir="${war.root.dir}/WEB-INF/classes" />
+	</delete>
+</target>
+
+<target name="proj.compile" depends="proj.clean" description="Compile the project">
+	
+	<path id="java.classpath.id" >
+		<fileset dir="${java.lib.dir}" includes="**.jar"/>
+		<fileset dir="${tomcat.home}/lib" includes="jsp-api.jar, servlet-api.jar"/>
+	</path>
+
+	<echo message="CLASSPATH: ${toString:java.classpath.id}"/>
+	
+	<mkdir dir="${war.root.dir}/WEB-INF/classes"/>
+
+	<!-- this directive only compiles classes that have changed -->
+	<javac srcdir="${java.src.dir}"
+		destdir="${war.root.dir}/WEB-INF/classes"
+		deprecation="on"
+		debug="on">
+		<classpath refid="java.classpath.id"/>
+	</javac>
+</target>
+
+<target name="jar" depends="proj.init">
+	<jar destfile="akmecore.jar" 
+		basedir="${war.root.dir}/WEB-INF/classes" 
+		compress="true" 
+		includes="**/*.class,**/*.properties,**/*.dtd,**/*.xml"/> 
+	<jar destfile="akmecore-src.jar" 
+		basedir="src" 
+		compress="true" 
+		includes="**/*.java,**/*.properties,**/*.dtd,**/*.xml"/> 
+</target>
+
+<target name="just.bugs.gui" depends="proj.init" description="Automated bug finder">
+	<exec executable="cmd.exe" dir="." failonerror="false">
+		<arg line="/c start ${findbugs.home}/bin/findbugs -gui -project ${findbugs.project}"/>
+	</exec>
+</target>
+
+<target name="just.bugs.find" depends="proj.init" description="Automated bug finder">
+	<!-- tolerance from verbose to brief: -low -medium -high -->
+	<property name="findbugs.options" value="-medium -nested:false"/>
+	<exec executable="cmd.exe" dir="." failonerror="false">
+		<arg line="/c ${findbugs.home}/bin/findbugs -textui -xml:withMessages ${findbugs.options} -project ${findbugs.project} -outputFile ${findbugs.xml}"/>
+	</exec>
+	<replace file="${findbugs.xml}">
+	<replacetoken><![CDATA[<BugCollection ]]></replacetoken>
+	<replacevalue><![CDATA[<?xml-stylesheet type="text/xsl" href="FindBugs-fancy.xsl"?><BugCollection ]]></replacevalue>
+	</replace>	
+</target>
+
+<target name="just.bugs.style" depends="proj.init" description="Just transform the xml bugs to html">
+	<xslt style="ant/FindBugs-fancy.xsl"
+		in="${findbugs.xml}"
+		out="${findbugs.html}"
+		>
+	<!--
+		<xmlcatalog ><dtd 
+            publicId="-//FindBugs//DTD FindBugs V1.0//EN"
+            location="FindBugs.dtd"/>
+		</xmlcatalog>
+	-->
+	</xslt>
+</target>
+
+<target name="find.and.style.bugs" depends="just.bugs.find, just.bugs.style" />
+
+</project>
