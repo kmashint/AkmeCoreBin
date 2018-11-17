@@ -1,8 +1,0 @@
-<Project filename="D:\_Project\AkmeCore\ant\FindBugs.fbp" projectName="FindBugs for AkmeCore">
-  <Jar>D:\_Project\AkmeCore\war\WEB-INF\classes</Jar>
-  <AuxClasspathEntry>C:\Java\Tomcat7\lib\servlet-api.jar</AuxClasspathEntry>
-  <SrcDir>D:\_Project\AkmeCore\src</SrcDir>
-  <SuppressionFilter>
-    <LastVersion value="-1" relOp="NEQ"/>
-  </SuppressionFilter>
-</Project>
